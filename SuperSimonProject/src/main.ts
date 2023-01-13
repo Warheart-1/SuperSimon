@@ -2,6 +2,7 @@ export class SuperSimon {
   public buttons : string[] = ['red', 'blue', 'green', 'yellow'];
   public buttonStart: string = 'start';
   public sequence = Array<string>();
+  public speed = 2500;
   public constructor() {
     this.buttons.forEach(button => {
       document.getElementById(button)?.addEventListener('click', () => {
@@ -21,13 +22,15 @@ export class SuperSimon {
     if(this.sequence.length > 0) {
       this.playSequence();
     }
+    console.log(this.sequence);
+    console.log(numberOfExercises);
   }
 
   private playSequence() {
     this.sequence.forEach((button, index) => {
       setTimeout(() => {
         this.playButton(button);
-      }, 1000 * index);
+      }, this.speed * index);
     });
   }
 
@@ -37,7 +40,7 @@ export class SuperSimon {
       buttonElement.classList.add('active');
       setTimeout(() => {
         buttonElement.classList.remove('active');
-      }, 500);
+      }, this.speed-100);
     }
   }
   
@@ -47,6 +50,20 @@ export class SuperSimon {
   }
 
   private buttonClicked(button: string) {
+    if (this.sequence.length > 0) {
+      if (button === this.sequence[0]) {
+        this.sequence.shift();
+        if (this.sequence.length === 0) {
+          if (this.speed > 500) {
+            this.speed = this.speed - 500;
+          } 
+          this.init();
+        }
+      } else {
+        this.sequence = [];
+        alert('Game over');
+      }
+    }
   }
 }
 
