@@ -1,61 +1,92 @@
-.active{
-    color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
+.active {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
 }
-.red-active{
-    color: #fff;
-    background-color: #d9534f;
-    border-color: #d43f3a;
+.red-active {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }
-.green-active{
-    color: #fff;
-    background-color: #5cb85c;
-    border-color: #4cae4c;
+.green-active {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
-.blue-active{
-    color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
+.blue-active {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
 }
-.yellow-active{
-    color: #fff;
-    background-color: #f0ad4e;
-    border-color: #eea236;
+.yellow-active {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
 }
 
 /* Simon Game Container */
 #simon-game {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-  }
-  
-  /* Simon Buttons */
-  .simon-button {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin: 0 10px;
-  }
-  
-  /* Red Simon Button */
-  .simon-button.red {
-    background-color: red;
-  }
-  
-  /* Blue Simon Button */
-  .simon-button.blue {
-    background-color: blue;
-  }
-  
-  /* Yellow Simon Button */
-  .simon-button.yellow {
-    background-color: yellow;
-  }
-  
-  /* Green Simon Button */
-  .simon-button.green {
-    background-color: green;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+/* Red Simon Button */
+.simon-button.red {
+  background-color: red;
+}
+
+/* Blue Simon Button */
+.simon-button.blue {
+  background-color: blue;
+}
+
+/* Yellow Simon Button */
+.simon-button.yellow {
+  background-color: yellow;
+}
+
+/* Green Simon Button */
+.simon-button.green {
+  background-color: green;
+}
+
+.wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+.quarter {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.quarter.left-top {
+  left: 0;
+  top: 0;
+  border-top-left-radius: 50px;
+}
+
+.quarter.right-top {
+  left: 50px;
+  top: 0;
+  border-top-right-radius: 50px;
+}
+
+.quarter.left-bottom {
+  left: 0;
+  top: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.quarter.right-bottom {
+  left: 50px;
+  top: 50px;
+  border-bottom-right-radius: 50px;
+}
