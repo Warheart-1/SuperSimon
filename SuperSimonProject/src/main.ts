@@ -1,6 +1,7 @@
 import * as Tone from 'tone';
 import { SuperSimon } from './controller/game';
 import { Modal } from './controller/modal';
+import { rules } from './controller/rules';
 
 class Main {
 
@@ -24,7 +25,7 @@ class Main {
             return;
           }
           if (!modal.classList.contains('show')) {
-            modalInstance.openModal();
+            modalInstance.openModal(rules);
             return;
           }
         }

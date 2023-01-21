@@ -3,9 +3,9 @@ import { IModal } from '../doc/main';
 export class Modal implements IModal{
 
     public _modal: HTMLDivElement;
-    public _modalContent: HTMLDivElement;
+    public _modalContent: HTMLParagraphElement;
   
-    constructor(modal: HTMLDivElement, modalContent: HTMLDivElement) {
+    constructor(modal: HTMLDivElement, modalContent: HTMLParagraphElement) {
       this._modal = modal;
       this._modalContent = modalContent;
     }

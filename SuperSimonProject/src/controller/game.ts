@@ -20,6 +20,7 @@ export class SuperSimon implements ISuperSimon {
     public numberOfClick = 0;
     private _score : HTMLTitleElement;
     private _numberClick : HTMLTitleElement;
+    private _turn : HTMLTitleElement;
     
     public constructor(synth : Tone.Synth<Tone.SynthOptions>) {
       this.buttons.forEach(button => {
@@ -33,6 +34,7 @@ export class SuperSimon implements ISuperSimon {
       });
       this._score = document.getElementById('score-value') as HTMLTitleElement;
       this._numberClick = document.getElementById('number-click') as HTMLTitleElement;
+      this._turn = document.getElementById('turn') as HTMLTitleElement;
       this._synth = synth;
     }
   
@@ -58,6 +60,7 @@ export class SuperSimon implements ISuperSimon {
     }
   
     public playSequence() {
+      this._turn.innerHTML = `Please watch the sequence...`;
       this.buttons.forEach(button => {
         (document.getElementById(button.color) as HTMLButtonElement).disabled = true;
       });
@@ -70,6 +73,7 @@ export class SuperSimon implements ISuperSimon {
         this.buttons.forEach(button => {
           (document.getElementById(button.color) as HTMLButtonElement).disabled = false;
         });
+        this._turn.innerHTML = `Your turn!`;
       } , this.speed * this.sequence.length);
     }
   
@@ -100,14 +104,24 @@ export class SuperSimon implements ISuperSimon {
           this.lastSequence.push(button);
           this.sequence.shift();
           if (this.sequence.length === 0) {
+            this.itteration++;
             this.showScore();
             if (this.speed > 500) {
-              this.speed = this.speed - 500;
+              this.speed -= 500;
             } 
-  
+            if(this.speed <= 500 && this.speed > 250) {
+                this.speed -= 50;
+            }
+            let delay = 0;
+            if(this.speed <= 500) {
+                delay = 250;
+            }
+            if(this.speed > 500) {
+                delay = 500;
+            }
             setTimeout(() => {
               this.init();
-            }, 500);
+            }, delay);
           }
         } else {
           this.gameOver();
@@ -120,16 +134,28 @@ export class SuperSimon implements ISuperSimon {
     }
 
     public showScore() {
-        this._score.textContent = `Score : ${this.lastSequence.length}`;
+        this._score.textContent = `Score : ${this.itteration}`;
+    }
+
+    public finalScore() : string
+    {
+        return `<h1>Game Over</h1>
+                <p>Score : ${this.itteration}</p>
+                <p>Number of click : ${this.numberOfClick}</p>
+                <p>Speed : ${this.speed} ms</p>`
     }
     
     public gameOver() {
+      this._turn.innerHTML = `Game Over!`;
+      const modal = new Modal(document.getElementById('myModal') as HTMLDivElement, document.getElementById('modal-content') as HTMLParagraphElement);
+      modal.openModal(this.finalScore());
       this.sequence = [];
       this.lastSequence = [];
       this.itteration = 0;
+      this.numberOfClick = 0;
+      this.speed = 2500;
       this.showScore();
-      const modal = new Modal(document.getElementById('modal') as HTMLDivElement, document.getElementById('modal-content') as HTMLDivElement);
-      modal.openModal();
+      this.showNumberClick();
       const buttonStart = document.getElementById(this.buttonStart) as HTMLButtonElement;
       buttonStart.textContent = 'Restart';
       buttonStart.disabled = false;

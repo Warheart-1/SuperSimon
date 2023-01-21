@@ -1,3 +1,7 @@
+*{
+  font-family: sans-serif;
+}
+
 #title {
   font-size: 20px;
   margin: 0;
@@ -42,7 +46,7 @@
   align-items: center;
   height: 500px;
   width: 500px;
-  transform: translate3d(35vw, 5vw, 0);
+  transform: translate3d(35vw, 6vw, 0);
 }
 
 /* Red Simon Button */
@@ -153,6 +157,14 @@
   }
 }
 
+#turn {
+  font-size: 50px;
+  margin: 0;
+  margin-right: 20px;
+  width: auto;
+  transform: translate3d(41vw, 5vw, 0);
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -200,7 +212,7 @@
   justify-content: center;
   align-items: center;
   height: 300px;
-  transform: translate3d(-3vw, 5vw, 0);
+  transform: translate3d(-2vw, 10vw, 0);
   font-family: sans-serif;
 }
 
