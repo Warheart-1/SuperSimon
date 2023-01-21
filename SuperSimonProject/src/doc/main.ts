@@ -3,6 +3,7 @@ import * as Tone from 'tone';
 export type button = {
     color: string;
     tone: string;
+    note: string;
    }
 
 export interface ISuperSimon {

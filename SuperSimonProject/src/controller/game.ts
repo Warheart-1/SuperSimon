@@ -3,11 +3,12 @@ import { ISuperSimon, button } from '../doc/main';
 import { Modal } from './modal';
 
 export class SuperSimon implements ISuperSimon {
+
     public buttons : button[] = [
-      {color: 'red', tone: "C4"},
-      {color: 'blue', tone: "D4"},
-      {color: 'green', tone: "E4"},
-      {color: 'yellow', tone: "F4"},
+      {color: 'red', tone: "C4", note: "DO"},
+      {color: 'blue', tone: "D4", note: "RE"},
+      {color: 'green', tone: "E4", note: "MI"},
+      {color: 'yellow', tone: "F4", note: "FA"},
     ];
   
     public buttonStart: string = 'start';
@@ -22,7 +23,7 @@ export class SuperSimon implements ISuperSimon {
     private _numberClick : HTMLTitleElement;
     private _turn : HTMLTitleElement;
     
-    public constructor(synth : Tone.Synth<Tone.SynthOptions>) {
+    constructor(synth : Tone.Synth<Tone.SynthOptions>) {
       this.buttons.forEach(button => {
         document.getElementById(button.color)?.addEventListener('click', () => {
           this.buttonClicked(button.color);
@@ -86,10 +87,13 @@ export class SuperSimon implements ISuperSimon {
   
     public playButton(button: string) {
       const buttonElement = document.getElementById(button);
+      const buttonSound = this.buttons.find(b => b.color === button)!;
       if (buttonElement) {
         this.playSound(button);
+        buttonElement.textContent = buttonSound.note;
         buttonElement.classList.add(`${button}-active`);
         setTimeout(() => {
+          buttonElement.textContent = '';
           buttonElement.classList.remove(`${button}-active`);
         }, this.speed-100);
       }
@@ -99,6 +103,7 @@ export class SuperSimon implements ISuperSimon {
       if (this.sequence.length > 0) {
         if (button === this.sequence[0]) {
           this.numberOfClick++;
+          
           this.playSound(button);
           this.showNumberClick();
           this.lastSequence.push(button);

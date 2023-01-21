@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" href="/src/style/main.scss" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Super Simon</title>
   </head>
-  <div id="navbar">
-    <div id="burger-menu" class="menu-closed">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-    </div>
-    <h1 id="title">Super Axel Game</h1>
-    <button id="modal-button">Rules</button>
-</div>
-<div id="myModal" class="modal">
 
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p id="modal-content">Some text in the Modal..</p>
-  </div>
 
-</div>
   <body>
+    <div id="myModal" class="modal">
+
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modal-content">Some text in the Modal..</p>
+      </div>
+        
+    </div>
+    
+    <header id="navbar">
+      <div id="burger-menu" class="menu-closed">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+      <h1 id="title">Super Axel Game</h1>
+      <button id="modal-button">Rules</button>
+    </header>
+
     <div id="app">
       <h1 id="turn">Super Simon</h1>
       <div id="simon-game" class="wrapper">
