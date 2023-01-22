@@ -6,6 +6,7 @@ import { rules } from './controller/rules';
 class Main {
 
   // Java equivalent: public static void main(String[] args) ☠️
+  // (En vrai, ça sert à rien, mais c'est marrant pour trigger des gens)
   public static main(args: string[]) : void 
   {
     if(args) {
@@ -13,9 +14,9 @@ class Main {
       const spanClose = document.getElementsByClassName('close')[0] as HTMLSpanElement;
       const modal = document.getElementById('myModal') as HTMLDivElement;
       const modalContent = document.getElementById('modal-content') as HTMLParagraphElement;
+      const modalInstance = new Modal(modal, modalContent);
       const volume = new Tone.Volume(-20).toDestination();
       const synth = new Tone.Synth().connect(volume);
-      const modalInstance = new Modal(modal, modalContent);
       new SuperSimon(synth);
 
       modalButton.addEventListener('click', (e : MouseEvent) => {

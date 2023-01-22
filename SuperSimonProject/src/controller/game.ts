@@ -19,9 +19,10 @@ export class SuperSimon implements ISuperSimon {
     public _synth : Tone.Synth<Tone.SynthOptions>;
     public itteration = 0;
     public numberOfClick = 0;
+    public _turn : HTMLTitleElement;
     private _score : HTMLTitleElement;
     private _numberClick : HTMLTitleElement;
-    private _turn : HTMLTitleElement;
+    
     
     constructor(synth : Tone.Synth<Tone.SynthOptions>) {
       this.buttons.forEach(button => {
@@ -30,6 +31,10 @@ export class SuperSimon implements ISuperSimon {
         });
       });
       document.getElementById(this.buttonStart)?.addEventListener('click', () => {
+        /**
+         * 
+         * Bouton de démarrage du jeu
+         */
         const buttonStart = document.getElementById(this.buttonStart) as HTMLButtonElement;
         buttonStart.disabled = true;
         buttonStart.style.backgroundColor = 'grey';
@@ -44,7 +49,11 @@ export class SuperSimon implements ISuperSimon {
     }
   
     public init() {
-      const numberOfExercises = Math.floor(Math.random() * 1) + 1;
+      /**
+       * 
+       * Nombre de sequences à rajouter
+       */
+      const numberOfExercises = 1;
       if(this.lastSequence.length > 0) {
         this.sequence.push(...this.lastSequence);
         this.lastSequence = [];
@@ -55,21 +64,23 @@ export class SuperSimon implements ISuperSimon {
       if(this.sequence.length > 0) {
         this.playSequence();
       }
-      console.log(this.sequence);
-      console.log(numberOfExercises)
     }
   
     public addNextButton() {
+      /**
+       * 
+       * Nombre aléatoire entre 0 et la longueur du tableau de boutons pour ajouter au hasard une couleur à la séquence
+       */
       const randomIndex = Math.floor(Math.random() * this.buttons.length);
       this.sequence.push(this.buttons[randomIndex].color);
     }
   
     public playSequence() {
-      this._turn.innerHTML = `Please watch the sequence...`;
+      this._turn.textContent = `Please watch the sequence...`;
       this.buttons.forEach(button => {
         (document.getElementById(button.color) as HTMLButtonElement).disabled = true;
       });
-      this.sequence.forEach((button, index) => {
+      this.sequence.forEach((button: string, index: number) => {
         setTimeout(() => {
           this.playButton(button);
         }, this.speed * index);
@@ -78,11 +89,15 @@ export class SuperSimon implements ISuperSimon {
         this.buttons.forEach(button => {
           (document.getElementById(button.color) as HTMLButtonElement).disabled = false;
         });
-        this._turn.innerHTML = `Your turn!`;
+        this._turn.textContent = `Your turn!`;
       } , this.speed * this.sequence.length);
     }
   
     public playSound(button: string) {
+      /**
+       * 
+       * Trouver le bouton correspondant à la couleur et jouer le son correspondant
+       */
       const buttonElement = this.buttons.find(b => b.color === button);
       if (buttonElement) {
         this._synth.triggerAttackRelease(buttonElement.tone, "8n");
@@ -90,7 +105,15 @@ export class SuperSimon implements ISuperSimon {
     }
   
     public playButton(button: string) {
+      /**
+       * 
+       * Trouver le bouton correspondant à la couleur 
+       */
       const buttonElement = document.getElementById(button);
+      /**
+       * 
+       * Trouve la son correspondant à la couleur
+       */
       const buttonSound = this.buttons.find(b => b.color === button)!;
       if (buttonElement) {
         this.playSound(button);
