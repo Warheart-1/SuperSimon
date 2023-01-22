@@ -29,8 +29,12 @@ export class SuperSimon implements ISuperSimon {
           this.buttonClicked(button.color);
         });
       });
-      document.getElementById(this.buttonStart)?.addEventListener('click', (e : MouseEvent) => {
-        (e.target as HTMLButtonElement).disabled = true;
+      document.getElementById(this.buttonStart)?.addEventListener('click', () => {
+        const buttonStart = document.getElementById(this.buttonStart) as HTMLButtonElement;
+        buttonStart.disabled = true;
+        buttonStart.style.backgroundColor = 'grey';
+        buttonStart.textContent = "You are already playing!"
+  
         this.init();
       });
       this._score = document.getElementById('score-value') as HTMLTitleElement;
@@ -98,12 +102,43 @@ export class SuperSimon implements ISuperSimon {
         }, this.speed-100);
       }
     }
+
+    public animateButton(button: string) {
+      const buttonElement = document.getElementById(button);
+      const buttonNote = this.buttons.find(b => b.color === button)!;
+      if (buttonElement) {
+        buttonElement.textContent = buttonNote.note;
+        buttonElement.classList.add(`${button}-active`);
+        setTimeout(() => {
+          buttonElement.textContent = '';
+          buttonElement.classList.remove(`${button}-active`);
+        }, 100);
+      }
+    }
+
+    public adjustSpeed() : number
+    {
+      if (this.speed > 500) {
+        this.speed -= 500;
+      } 
+      if(this.speed <= 500 && this.speed > 250) {
+          this.speed -= 50;
+      }
+      let delay = 0;
+      if(this.speed <= 500) {
+          delay = 250;
+      }
+      if(this.speed > 500) {
+          delay = 500;
+      }
+      return delay;
+    }
   
     public buttonClicked(button: string) {
       if (this.sequence.length > 0) {
         if (button === this.sequence[0]) {
           this.numberOfClick++;
-          
+          this.animateButton(button);
           this.playSound(button);
           this.showNumberClick();
           this.lastSequence.push(button);
@@ -111,19 +146,8 @@ export class SuperSimon implements ISuperSimon {
           if (this.sequence.length === 0) {
             this.itteration++;
             this.showScore();
-            if (this.speed > 500) {
-              this.speed -= 500;
-            } 
-            if(this.speed <= 500 && this.speed > 250) {
-                this.speed -= 50;
-            }
-            let delay = 0;
-            if(this.speed <= 500) {
-                delay = 250;
-            }
-            if(this.speed > 500) {
-                delay = 500;
-            }
+            this._turn.innerHTML = `Well done!`;
+            let delay = this.adjustSpeed();
             setTimeout(() => {
               this.init();
             }, delay);
@@ -147,7 +171,19 @@ export class SuperSimon implements ISuperSimon {
         return `<h1>Game Over</h1>
                 <p>Score : ${this.itteration}</p>
                 <p>Number of click : ${this.numberOfClick}</p>
-                <p>Speed : ${this.speed} ms</p>`
+                <p>Speed : ${this.speed} ms</p>
+                <button class="buttonGame start" id="restart">Restart</button>`
+    }
+
+    public restartGame(modal : Modal) {
+      const buttonStart = document.getElementById(this.buttonStart) as HTMLButtonElement;
+      document.getElementById("restart")!.addEventListener('click', () => {
+        buttonStart.textContent = 'You are already playing!';
+        buttonStart.style.backgroundColor = 'gray';
+        buttonStart.disabled = true;
+        modal.closeModal();
+        this.init();
+      });
     }
     
     public gameOver() {
@@ -159,9 +195,11 @@ export class SuperSimon implements ISuperSimon {
       this.itteration = 0;
       this.numberOfClick = 0;
       this.speed = 2500;
+      this.restartGame(modal);
       this.showScore();
       this.showNumberClick();
       const buttonStart = document.getElementById(this.buttonStart) as HTMLButtonElement;
+      buttonStart.style.backgroundColor = 'purple';
       buttonStart.textContent = 'Restart';
       buttonStart.disabled = false;
     }
