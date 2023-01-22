@@ -13,8 +13,8 @@ class Main {
       const spanClose = document.getElementsByClassName('close')[0] as HTMLSpanElement;
       const modal = document.getElementById('myModal') as HTMLDivElement;
       const modalContent = document.getElementById('modal-content') as HTMLParagraphElement;
-
-      const synth = new Tone.Synth().toDestination();
+      const volume = new Tone.Volume(-20).toDestination();
+      const synth = new Tone.Synth().connect(volume);
       const modalInstance = new Modal(modal, modalContent);
       new SuperSimon(synth);
 
